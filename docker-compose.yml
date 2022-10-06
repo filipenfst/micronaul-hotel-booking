@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pwd2020
+    ports:
+      - "27017:27017"
+
+  app-build:
+    image: hotel-booking
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+    environment:
+      MONGODB_URI: mongodb://root:pwd2020@mongo:27017/hotel-booking?authSource=admin
