@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
 
-  app-build:
+  app:
     image: hotel-booking
     ports:
       - "8080:8080"
