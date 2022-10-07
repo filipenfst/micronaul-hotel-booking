@@ -10,7 +10,7 @@ To run this project it is necessary to have graalVm installed on your machine. T
 Linux or Mac is to use [SDKMan.io](https://sdkman.io/)
 
 ```
-sdk install java 22.2.0.r17-grl
+sdk install java 22.2.r17-grl
 ```
 
 For installation on Windows, or for manual installation on Linux or Mac, see
