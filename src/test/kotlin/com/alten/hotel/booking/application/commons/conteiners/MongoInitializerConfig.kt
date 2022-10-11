@@ -12,6 +12,7 @@ internal object MongoInitializerConfig : ApplicationContainerInitializerConfig<M
 
     override fun getProperties() = mapOf(
         "mongodb.uri" to container.replicaSetUrl,
+        "mongodb.db-name" to container.replicaSetUrl.replace(container.connectionString+"/",""),
     ).also {
         it.values.forEach { v -> logInfo("Mongodb----------$v") }
     }

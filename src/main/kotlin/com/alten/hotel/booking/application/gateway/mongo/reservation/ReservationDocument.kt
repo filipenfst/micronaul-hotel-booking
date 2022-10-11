@@ -9,7 +9,9 @@ import org.bson.types.ObjectId
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@MappedEntity("reservation")
+const val RESERVATION_DB_NAME = "reservation"
+
+@MappedEntity(RESERVATION_DB_NAME)
 data class ReservationDocument(
     @field:Id
     val id: String = ObjectId().toString(),

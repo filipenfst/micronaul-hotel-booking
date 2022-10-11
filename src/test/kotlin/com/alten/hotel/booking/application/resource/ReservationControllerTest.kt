@@ -41,7 +41,7 @@ internal class ReservationControllerTest : IntegrationTests {
                 }"""
             ).`when`().post("/reservations")
             .then()
-//            .statusCode(200)
+            .statusCode(200)
             .body(
                 "start", CoreMatchers.`is`(start.toString()),
                 "end", CoreMatchers.`is`(end.toString())
