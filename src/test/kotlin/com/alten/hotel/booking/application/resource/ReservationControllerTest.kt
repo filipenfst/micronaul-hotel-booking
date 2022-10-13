@@ -4,7 +4,6 @@ import com.alten.hotel.booking.application.IntegrationTests
 import com.alten.hotel.booking.application.commons.assertThat
 import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationDocument
 import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationRepository
-import io.micronaut.data.mongodb.operations.MongoReactorRepositoryOperations
 import io.restassured.http.ContentType
 import io.restassured.specification.RequestSpecification
 import jakarta.inject.Inject
@@ -52,7 +51,6 @@ internal class ReservationControllerTest : IntegrationTests {
             .isEqualTo(
                 listOf(
                     ReservationDocument(
-                        id = UUID.randomUUID().toString(),
                         clientId = clientId,
                         startDate = start,
                         endDate = end,
@@ -245,7 +243,7 @@ internal class ReservationControllerTest : IntegrationTests {
             .isEqualTo(
                 listOf(
                     ReservationDocument(
-                        id = UUID.randomUUID().toString(),
+                        id = UUID.randomUUID(),
                         clientId = reservation.clientId,
                         startDate = start,
                         endDate = end,
@@ -291,9 +289,7 @@ internal class ReservationControllerTest : IntegrationTests {
             )
 
         repository.findAll().asFlow()
-            .assertThat { hasSize(1) }
-            .isEqualTo(listOf(reservation))
-
+            .assertThat { hasSize(0) }
     }
 
     @Test

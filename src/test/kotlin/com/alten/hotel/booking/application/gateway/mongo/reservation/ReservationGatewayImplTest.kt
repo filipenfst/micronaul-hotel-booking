@@ -80,7 +80,7 @@ internal class ReservationGatewayImplTest : IntegrationTests {
         )
 
         assertThrows<ReservationNotFoundException> {
-            classUnderTest.remove("test")
+            classUnderTest.remove(UUID.randomUUID().toString())
         }
 
         repository.findAll().asFlow().assertThat { hasSize(1) }

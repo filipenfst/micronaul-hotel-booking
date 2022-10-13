@@ -1,20 +1,14 @@
 package com.alten.hotel.booking.application.gateway.mongo.reservation
 
-import io.micronaut.data.mongodb.annotation.MongoRepository
-import io.micronaut.data.repository.kotlin.CoroutineCrudRepository
+import io.micronaut.data.model.query.builder.sql.Dialect
+import io.micronaut.data.r2dbc.annotation.R2dbcRepository
 import io.micronaut.data.repository.reactive.ReactiveStreamsCrudRepository
-import jakarta.inject.Inject
-import jakarta.inject.Singleton
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.reactive.asFlow
-import kotlinx.coroutines.reactive.awaitFirstOrNull
-import kotlinx.coroutines.reactive.awaitSingle
 import org.reactivestreams.Publisher
 import java.time.LocalDate
-import javax.transaction.Transactional
+import java.util.UUID
 
-@MongoRepository
-interface ReservationRepository : ReactiveStreamsCrudRepository<ReservationDocument, String> {
+@R2dbcRepository(dialect = Dialect.POSTGRES)
+interface ReservationRepository : ReactiveStreamsCrudRepository<ReservationDocument, UUID> {
 
     fun existsByStartDateBetweenOrEndDateBetween(
         startDateStart: LocalDate,
@@ -31,9 +25,9 @@ interface ReservationRepository : ReactiveStreamsCrudRepository<ReservationDocum
         endDateEnd: LocalDate
     ): Publisher<ReservationDocument>
 
-    override fun findById(id: String): Publisher<ReservationDocument>
+    override fun findById(id: UUID): Publisher<ReservationDocument>
 
     override fun <S : ReservationDocument> save(entity: S): Publisher<S>
 
-    override fun deleteById(id: String): Publisher<Long>
+    override fun deleteById(id: UUID): Publisher<Long>
 }

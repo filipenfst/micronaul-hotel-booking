@@ -25,3 +25,17 @@ mongodb:
   uuid-representation: STANDARD
   uri: mongodb://${MONGO_USER:root}:${MONGO_PASSWORD:pwd2020}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/hotel-booking?authSource=admin
   db-name: hotel-booking
+
+
+flyway:
+  enabled: true
+  datasources:
+    default:
+      enabled: true
+datasources:
+  default:
+    url: jdbc:mysql://postgress:3306/hotel-booking
+r2dbc:
+  datasources:
+    default:
+      url: r2dbc:mysql://postgres:3306/hotel-booking

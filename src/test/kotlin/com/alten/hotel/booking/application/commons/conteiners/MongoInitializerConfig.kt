@@ -1,21 +1,51 @@
 package com.alten.hotel.booking.application.commons.conteiners
 
 import com.alten.hotel.booking.commons.logger.logInfo
-import org.testcontainers.containers.MongoDBContainer
+import org.flywaydb.core.Flyway
 import org.testcontainers.containers.Network
+import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 
-internal object MongoInitializerConfig : ApplicationContainerInitializerConfig<MongoDBContainer> {
-    override val container: MongoDBContainer = MongoDBContainer(DockerImageName.parse("mongo"))
-        .withNetwork(Network.SHARED)
-        .withNetworkAliases("mongo")
 
-    override fun getProperties() = mapOf(
-        "mongodb.uri" to container.replicaSetUrl,
-        "mongodb.db-name" to container.replicaSetUrl.replace(container.connectionString+"/",""),
-    ).also {
-        it.values.forEach { v -> logInfo("Mongodb----------$v") }
+object PostgresContainer : PostgreSQLContainer<PostgresContainer>(
+    DockerImageName.parse("debezium/postgres:13-alpine").asCompatibleSubstituteFor("postgres")
+) {
+    init {
+        withUsername("root")
+        withPassword("root")
+        withDatabaseName("test")
+        withNetwork(Network.SHARED)
+
+        start()
     }
 }
 
-internal object MongoInitializer : ApplicationInitializer(MongoInitializerConfig)
+internal object PostgresqlInitializerConfig : ApplicationContainerInitializerConfig<PostgresContainer> {
+    override val container: PostgresContainer = PostgresContainer
+
+    override fun getProperties() = mapOf(
+        "r2dbc.datasources.default.url" to getR2dbcUrl(),
+        "datasources.default.url" to container.jdbcUrl,
+
+        "r2dbc.datasources.default.username" to container.username,
+        "r2dbc.datasources.default.password" to container.password,
+    ).also {
+        it.values.forEach { v -> logInfo("Postgresql----------$v") }
+        runMigrations()
+    }
+
+    private fun runMigrations() {
+        Flyway
+            .configure()
+            .dataSource(container.jdbcUrl, container.username, container.password)
+            .schemas("public")
+            .locations("classpath:db/migration", "classpath:db/scripts")
+            .load()
+            .migrate()
+    }
+
+    fun getR2dbcUrl(): String =
+        container.jdbcUrl.replace("jdbc", "r2dbc")
+}
+
+internal object PostgresqlInitializer : ApplicationInitializer(PostgresqlInitializerConfig)

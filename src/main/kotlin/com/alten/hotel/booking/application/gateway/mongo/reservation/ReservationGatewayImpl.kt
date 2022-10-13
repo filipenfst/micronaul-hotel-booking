@@ -7,35 +7,20 @@ import com.alten.hotel.booking.domain.reservation.entities.ConfirmedReservation
 import com.alten.hotel.booking.domain.reservation.entities.ReservationRequest
 import com.alten.hotel.booking.domain.reservation.services.ReservationGateway
 import com.alten.hotel.booking.domain.reservation.validation.exceptions.ReservationNotFoundException
-import com.mongodb.client.model.Indexes
-import com.mongodb.reactivestreams.client.MongoClient
-import io.micronaut.context.annotation.Value
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
+import java.util.UUID
 
 @Singleton
 class ReservationGatewayImpl(
     @Inject private val repository: ReservationRepository,
-    @Inject private val mongoClient: MongoClient,
-    @Value("\${mongodb.db-name}") private val dbName: String,
 ) : ReservationGateway {
-
-    init {
-        runBlocking {
-            mongoClient.getDatabase(dbName).getCollection(RESERVATION_DB_NAME).createIndex(
-                Indexes.ascending("startDate"),
-            ).asFlow().toList()
-        }
-
-    }
 
     override suspend fun isAvailable(startDate: LocalDate, endDate: LocalDate): Boolean {
         logInfo("Checking if dates $startDate to $endDate are available")
@@ -47,7 +32,7 @@ class ReservationGatewayImpl(
 
     override suspend fun find(reservationId: String): ConfirmedReservation? {
         logInfo("Searching for reservation with id: $reservationId")
-        return repository.findById(reservationId).awaitFirstOrNull()?.toDomain().also {
+        return repository.findById(UUID.fromString(reservationId)).awaitFirstOrNull()?.toDomain().also {
             logInfo("Returning $it")
         }
     }
@@ -61,7 +46,7 @@ class ReservationGatewayImpl(
 
     override suspend fun remove(reservationId: String) {
         logInfo("Removing reservation with id:$reservationId")
-        if (repository.deleteById(reservationId).awaitSingle() < 1L) {
+        if (repository.deleteById(UUID.fromString(reservationId)).awaitSingle() < 1L) {
             throw ReservationNotFoundException("The requested reservation with id:$reservationId was not found.").also {
                 logInfo("Failed to remove reservation: ${it.message}")
             }

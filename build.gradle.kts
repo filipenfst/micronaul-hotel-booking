@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("io.micronaut.application") version "3.5.3"
+    id("io.micronaut.application") version "3.6.2"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -24,11 +24,12 @@ val coroutinesVersion = "1.6.4"
 val jacksonVersion = "2.13.4"
 val wiremockVersion = "2.34.0"
 val mockkVersion = "1.13.2"
+val postgresqlVersion = "42.5.0"
 val ktlint by configurations.creating
 
 dependencies {
     kapt("io.micronaut:micronaut-http-validation")
-    kapt("io.micronaut.data:micronaut-data-document-processor")
+    kapt("io.micronaut.data:micronaut-data-processor")
     kapt("io.micronaut.openapi:micronaut-openapi")
     kapt("io.micronaut:micronaut-management")
     kapt("io.micronaut:micronaut-graal")
@@ -37,8 +38,8 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
-    implementation("io.micronaut.data:micronaut-data-mongodb")
-    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    implementation("io.micronaut.data:micronaut-data-r2dbc")
+    implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
 
     implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
@@ -61,7 +62,8 @@ dependencies {
 
     compileOnly("org.graalvm.nativeimage:svm")
 
-    runtimeOnly("org.mongodb:mongodb-driver-reactivestreams")
+    runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
+    runtimeOnly("org.postgresql:postgresql:42.5.0")
 
     ktlint("com.pinterest:ktlint:0.47.1")
 
@@ -69,11 +71,11 @@ dependencies {
     testImplementation("io.micronaut.test:micronaut-test-rest-assured")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
-    testImplementation("org.testcontainers:mongodb:$testcontainersVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
 }
 
 configurations.all {
