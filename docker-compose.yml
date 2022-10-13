@@ -1,19 +1,20 @@
 version: "3.7"
 
 services:
-  mongo:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: pwd2020
+  postgres:
+    image: debezium/postgres:13-alpine
     ports:
-      - "27017:27017"
+      - "5432:5432"
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: hotel-booking
 
   app:
     image: hotel-booking
     ports:
       - "8080:8080"
     links:
-      - mongo
-    environment:
-      MONGODB_URI: mongodb://root:pwd2020@mongo:27017/hotel-booking?authSource=admin
+      - postgres
