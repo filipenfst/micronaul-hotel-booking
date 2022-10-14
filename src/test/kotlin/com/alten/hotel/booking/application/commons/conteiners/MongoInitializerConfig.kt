@@ -24,11 +24,14 @@ internal object PostgresqlInitializerConfig : ApplicationContainerInitializerCon
     override val container: PostgresContainer = PostgresContainer
 
     override fun getProperties() = mapOf(
-        "r2dbc.datasources.default.url" to getR2dbcUrl(),
         "datasources.default.url" to container.jdbcUrl,
-
+        "r2dbc.datasources.default.url" to getR2dbcUrl(),
         "r2dbc.datasources.default.username" to container.username,
+
         "r2dbc.datasources.default.password" to container.password,
+        "flyway.datasources.default.url" to container.jdbcUrl,
+        "flyway.datasources.default.username" to container.username,
+        "flyway.datasources.default.password" to container.password,
     ).also {
         it.values.forEach { v -> logInfo("Postgresql----------$v") }
         runMigrations()

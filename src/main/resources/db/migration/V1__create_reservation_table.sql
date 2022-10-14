@@ -5,3 +5,7 @@ create table reservation(
                       end_date DATE not null,
                       created_at TIMESTAMP not null
 );
+
+create index start_date_idx on reservation(
+                                           start_date asc
+    )

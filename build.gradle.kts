@@ -40,7 +40,6 @@ dependencies {
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.data:micronaut-data-r2dbc")
     implementation("io.micronaut.flyway:micronaut-flyway")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
 
     implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
@@ -65,6 +64,7 @@ dependencies {
 
     runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     runtimeOnly("org.postgresql:postgresql:42.5.0")
+    runtimeOnly("io.r2dbc:r2dbc-pool")
 
     ktlint("com.pinterest:ktlint:0.47.1")
 
@@ -210,7 +210,7 @@ tasks {
     graalvmNative {
         binaries {
             named("main") {
-                imageName.set("hotel-booking")
+                imageName.set("hotel-booking-mp")
                 buildArgs.add("--verbose")
                 buildArgs.add("--initialize-at-run-time=com.fasterxml.jackson.module.kotlin")
             }
