@@ -210,7 +210,7 @@ tasks {
     graalvmNative {
         binaries {
             named("main") {
-                imageName.set("hotel-booking-mp")
+                imageName.set("hotel-booking")
                 buildArgs.add("--verbose")
                 buildArgs.add("--initialize-at-run-time=com.fasterxml.jackson.module.kotlin")
             }
