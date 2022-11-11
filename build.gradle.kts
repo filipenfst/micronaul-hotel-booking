@@ -22,7 +22,7 @@ val testcontainersVersion = "1.17.4"
 val resilience4jVersion = "1.7.1"
 val coroutinesVersion = "1.6.4"
 val jacksonVersion = "2.13.4"
-val wiremockVersion = "2.34.0"
+val wiremockVersion = "2.35.0"
 val mockkVersion = "1.13.2"
 val postgresqlVersion = "42.5.0"
 val ktlint by configurations.creating
@@ -43,6 +43,7 @@ dependencies {
     implementation("io.micronaut.serde:micronaut-serde-jackson")
 
     implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
 
     implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
     implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
@@ -53,8 +54,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
-    implementation("io.netty:netty-handler:4.1.82.Final")
-    implementation("ch.qos.logback:logback-classic:1.4.3")
+    implementation("io.netty:netty-handler:4.1.84.Final")
+    implementation("ch.qos.logback:logback-classic:1.4.4")
     implementation("org.slf4j:slf4j-simple")
     implementation("org.slf4j:slf4j-api")
     implementation("io.swagger.core.v3:swagger-annotations")

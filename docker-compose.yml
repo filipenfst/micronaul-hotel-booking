@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   postgres:
-    image: debezium/postgres:13-alpine
+    image: postgres
     ports:
       - "5432:5432"
     restart: always
@@ -19,4 +19,5 @@ services:
       - "8080:8080"
     links:
       - postgres
-
+    environment:
+      R2DBC_DATASOURCES_DEFAULT_MAXSIZE: 500

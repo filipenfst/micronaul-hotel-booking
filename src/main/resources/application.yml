@@ -9,6 +9,13 @@ micronaut:
       swagger-ui:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
 netty:
   default:
     allocator:
@@ -31,16 +38,25 @@ flyway:
       url: jdbc:postgresql://postgres:5432/hotel-booking
       username: root
       password: root
-datasources:
-  default:
-    driverClassName: org.postgresql.Driver
-    dialect: POSTGRES
-    url: jdbc:postgresql://postgres:5432/hotel-booking
-    username: root
-    password: root
+#datasources:
+#  default:
+#    driverClassName: org.postgresql.Driver
+#    dialect: POSTGRES
+#    url: jdbc:postgresql://postgres:5432/hotel-booking
+#    username: root
+#    password: root
 r2dbc:
   datasources:
     default:
+      options:
+        driver: pool
+        protocol: postgres
       url: r2dbc:postgresql://postgres:5432/hotel-booking
       username: root
       password: root
+      maxSize: 100
+      initialSize: 5
+
+endpoints:
+  prometheus:
+    sensitive: false
