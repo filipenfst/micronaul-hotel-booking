@@ -54,12 +54,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:$coroutinesVersion")
-    implementation("io.netty:netty-handler:4.1.84.Final")
     implementation("ch.qos.logback:logback-classic:1.4.4")
     implementation("org.slf4j:slf4j-simple")
     implementation("org.slf4j:slf4j-api")
     implementation("io.swagger.core.v3:swagger-annotations")
-    implementation("io.micronaut:micronaut-management:3.7.1")
+    implementation("io.micronaut:micronaut-management")
 
     compileOnly("org.graalvm.nativeimage:svm")
 

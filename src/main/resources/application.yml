@@ -16,6 +16,10 @@ micronaut:
         enabled: true
         step: PT1M
         descriptions: true
+    binders:
+      jvm:
+        enabled: true
+
 netty:
   default:
     allocator:
@@ -51,11 +55,11 @@ r2dbc:
       options:
         driver: pool
         protocol: postgres
+        maxSize: 100
+        initialSize: 5
       url: r2dbc:postgresql://postgres:5432/hotel-booking
       username: root
       password: root
-      maxSize: 100
-      initialSize: 5
 
 endpoints:
   prometheus:
