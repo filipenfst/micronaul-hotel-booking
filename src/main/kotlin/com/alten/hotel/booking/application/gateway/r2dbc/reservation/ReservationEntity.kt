@@ -1,4 +1,4 @@
-package com.alten.hotel.booking.application.gateway.mongo.reservation
+package com.alten.hotel.booking.application.gateway.r2dbc.reservation
 
 import com.alten.hotel.booking.domain.reservation.entities.ConfirmedReservation
 import com.alten.hotel.booking.domain.reservation.entities.ReservationConfirmation
@@ -12,7 +12,7 @@ import java.util.UUID
 const val RESERVATION_DB_NAME = "reservation"
 
 @MappedEntity(RESERVATION_DB_NAME)
-data class ReservationDocument(
+data class ReservationEntity(
     @field:Id
     val id: UUID = UUID.randomUUID(),
     val clientId: String,
@@ -32,7 +32,7 @@ data class ReservationDocument(
     )
 }
 
-fun ReservationRequest.toDocument() = ReservationDocument(
+fun ReservationRequest.toEntity() = ReservationEntity(
     clientId = clientId,
     startDate = startDate,
     endDate = endDate,

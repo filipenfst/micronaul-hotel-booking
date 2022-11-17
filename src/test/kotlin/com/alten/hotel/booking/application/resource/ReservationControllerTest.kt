@@ -2,8 +2,8 @@ package com.alten.hotel.booking.application.resource
 
 import com.alten.hotel.booking.application.IntegrationTests
 import com.alten.hotel.booking.application.commons.assertThat
-import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationDocument
-import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationRepository
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationEntity
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationRepository
 import io.restassured.http.ContentType
 import io.restassured.specification.RequestSpecification
 import jakarta.inject.Inject
@@ -50,7 +50,7 @@ internal class ReservationControllerTest : IntegrationTests {
             .ignoringFields("id")
             .isEqualTo(
                 listOf(
-                    ReservationDocument(
+                    ReservationEntity(
                         clientId = clientId,
                         startDate = start,
                         endDate = end,
@@ -173,7 +173,7 @@ internal class ReservationControllerTest : IntegrationTests {
     @Test
     fun `Test booking room fails for unavailable days`(): Unit = runBlocking {
         val reservation = repository.save(
-            ReservationDocument(
+            ReservationEntity(
                 clientId = UUID.randomUUID().toString(),
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusDays(3),
@@ -210,7 +210,7 @@ internal class ReservationControllerTest : IntegrationTests {
     @Test
     fun `Test editing reservation room successfully`(): Unit = runBlocking {
         val reservation = repository.save(
-            ReservationDocument(
+            ReservationEntity(
                 clientId = UUID.randomUUID().toString(),
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusDays(3),
@@ -242,7 +242,7 @@ internal class ReservationControllerTest : IntegrationTests {
             .ignoringFields("id")
             .isEqualTo(
                 listOf(
-                    ReservationDocument(
+                    ReservationEntity(
                         id = UUID.randomUUID(),
                         clientId = reservation.clientId,
                         startDate = start,
@@ -257,7 +257,7 @@ internal class ReservationControllerTest : IntegrationTests {
     @Test
     fun `Test editing reservation fails `(): Unit = runBlocking {
         val reservation = repository.save(
-            ReservationDocument(
+            ReservationEntity(
                 clientId = UUID.randomUUID().toString(),
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusDays(3),
@@ -323,7 +323,7 @@ internal class ReservationControllerTest : IntegrationTests {
     @Test
     fun `Test removing reservation success`(): Unit = runBlocking {
         val reservation = repository.save(
-            ReservationDocument(
+            ReservationEntity(
                 clientId = UUID.randomUUID().toString(),
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusDays(3),
@@ -345,7 +345,7 @@ internal class ReservationControllerTest : IntegrationTests {
     @Test
     fun `Test removing reservation from other client`(): Unit = runBlocking {
         val reservation = repository.save(
-            ReservationDocument(
+            ReservationEntity(
                 clientId = UUID.randomUUID().toString(),
                 startDate = LocalDate.now().plusDays(1),
                 endDate = LocalDate.now().plusDays(3),

@@ -1,4 +1,4 @@
-package com.alten.hotel.booking.application.gateway.mongo.reservation
+package com.alten.hotel.booking.application.gateway.r2dbc.reservation
 
 import com.alten.hotel.booking.commons.logger.logInfo
 import com.alten.hotel.booking.commons.utils.date.rangeTo
@@ -39,7 +39,7 @@ class ReservationGatewayImpl(
 
     override suspend fun create(reservation: ReservationRequest): ConfirmedReservation = with(reservation) {
         logInfo("Creating new reservation: $reservation")
-        repository.save(toDocument()).awaitSingle().toDomain().also {
+        repository.save(toEntity()).awaitSingle().toDomain().also {
             logInfo("Returning $it")
         }
     }

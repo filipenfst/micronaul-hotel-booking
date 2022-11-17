@@ -2,6 +2,8 @@ package com.alten.hotel.booking.application.gateway.mongo.reservation
 
 import com.alten.hotel.booking.application.IntegrationTests
 import com.alten.hotel.booking.application.commons.assertThat
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationGatewayImpl
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationRepository
 import com.alten.hotel.booking.domain.reservation.entities.ReservationRequest
 import com.alten.hotel.booking.domain.reservation.validation.exceptions.ReservationNotFoundException
 import jakarta.inject.Inject

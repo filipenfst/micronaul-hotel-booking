@@ -3,7 +3,7 @@ package com.alten.hotel.booking.application
 import com.alten.hotel.booking.application.commons.conteiners.PostgresqlInitializer
 import com.alten.hotel.booking.application.commons.conteiners.merge
 import com.alten.hotel.booking.application.commons.wiremock.WireMockInitializer
-import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationRepository
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationRepository
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import kotlinx.coroutines.reactive.asFlow

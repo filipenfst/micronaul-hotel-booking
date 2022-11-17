@@ -1,7 +1,7 @@
 package com.alten.hotel.booking.application.resource
 
-import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationDocument
-import com.alten.hotel.booking.application.gateway.mongo.reservation.ReservationRepository
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationEntity
+import com.alten.hotel.booking.application.gateway.r2dbc.reservation.ReservationRepository
 import com.alten.hotel.booking.commons.logger.logInfo
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Delete
@@ -46,7 +46,7 @@ class SetupController(
             repeat(size.toInt()) {
                 now.plusDays(it.toLong())
                     .run {
-                        ReservationDocument(
+                        ReservationEntity(
                             clientId = userId,
                             startDate = this,
                             endDate = this,

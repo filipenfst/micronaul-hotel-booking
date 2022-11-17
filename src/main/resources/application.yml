@@ -42,13 +42,7 @@ flyway:
       url: jdbc:postgresql://postgres:5432/hotel-booking
       username: root
       password: root
-#datasources:
-#  default:
-#    driverClassName: org.postgresql.Driver
-#    dialect: POSTGRES
-#    url: jdbc:postgresql://postgres:5432/hotel-booking
-#    username: root
-#    password: root
+
 r2dbc:
   datasources:
     default:
