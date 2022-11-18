@@ -164,39 +164,39 @@ tasks.withType<JacocoReport> {
 }
 tasks.withType<JacocoCoverageVerification> {
     dependsOn(tasks.jacocoTestReport)
-//    violationRules {
-//        isFailOnViolation = true
-//        rule {
-//            limit {
-//                counter = "INSTRUCTION"
-//                minimum = "0.99".toBigDecimal()
-//            }
-//        }
-//        rule {
-//            limit {
-//                counter = "LINE"
-//                minimum = "0.99".toBigDecimal()
-//            }
-//        }
-//        rule {
-//            limit {
-//                counter = "BRANCH"
-//                minimum = "1.00".toBigDecimal()
-//            }
-//        }
-//        rule {
-//            limit {
-//                counter = "METHOD"
-//                minimum = "1.00".toBigDecimal()
-//            }
-//        }
-//        rule {
-//            limit {
-//                counter = "CLASS"
-//                minimum = "1.00".toBigDecimal()
-//            }
-//        }
-//    }
+    violationRules {
+        isFailOnViolation = true
+        rule {
+            limit {
+                counter = "INSTRUCTION"
+                minimum = "0.99".toBigDecimal()
+            }
+        }
+        rule {
+            limit {
+                counter = "LINE"
+                minimum = "0.99".toBigDecimal()
+            }
+        }
+        rule {
+            limit {
+                counter = "BRANCH"
+                minimum = "1.00".toBigDecimal()
+            }
+        }
+        rule {
+            limit {
+                counter = "METHOD"
+                minimum = "1.00".toBigDecimal()
+            }
+        }
+        rule {
+            limit {
+                counter = "CLASS"
+                minimum = "1.00".toBigDecimal()
+            }
+        }
+    }
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.map {
             fileTree(it).apply {

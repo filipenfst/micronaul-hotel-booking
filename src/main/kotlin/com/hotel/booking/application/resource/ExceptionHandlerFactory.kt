@@ -1,6 +1,5 @@
 package com.hotel.booking.application.resource
 
-import com.hotel.booking.commons.logger.logError
 import com.hotel.booking.commons.logger.logWarn
 import com.hotel.booking.domain.reservation.validation.exceptions.ReservationNotFoundException
 import com.hotel.booking.domain.reservation.validation.exceptions.ReservationValidationException
@@ -24,12 +23,11 @@ class ExceptionHandlerFactory {
             logWarn("Error on request $request", ex = exception)
             HttpResponse.notFound(ErrorResponse(exception.message))
         }
-//
-    @Singleton
-    fun exceptionHandler() =
-        ExceptionHandler<Exception, HttpResponse<ErrorResponse>> { request, exception ->
-            logError("Error on request $request", ex = exception)
-            HttpResponse.notFound(ErrorResponse(exception.message ?: ""))
-        }
+//    @Singleton
+//    fun exceptionHandler() =
+//        ExceptionHandler<Exception, HttpResponse<ErrorResponse>> { request, exception ->
+//            logError("Error on request $request", ex = exception)
+//            HttpResponse.notFound(ErrorResponse(exception.message ?: ""))
+//        }
 }
 
