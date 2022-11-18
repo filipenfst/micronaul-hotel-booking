@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.alten.hotel.booking
+defaultPackage: com.hotel.booking
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

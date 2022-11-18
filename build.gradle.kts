@@ -1,16 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("io.micronaut.application") version "3.6.2"
-    id("io.gitlab.arturbosch.detekt") version "1.21.0"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
     kotlin("kapt") version "1.7.10"
     kotlin("jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.2"
+    id("io.gitlab.arturbosch.detekt") version "1.21.0"
     jacoco
 }
 
-group = "com.alten.hotel.booking"
+group = "com.hotel.booking"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -28,8 +28,8 @@ val postgresqlVersion = "42.5.0"
 val ktlint by configurations.creating
 
 dependencies {
-    kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.data:micronaut-data-processor")
+    kapt("io.micronaut:micronaut-http-validation")
     kapt("io.micronaut.openapi:micronaut-openapi")
     kapt("io.micronaut:micronaut-management")
     kapt("io.micronaut:micronaut-graal")
@@ -91,11 +91,11 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.alten.hotel.booking.application.*")
+        annotations("com.hotel.booking.application.*")
     }
 }
 application {
-    mainClass.set("com.alten.hotel.booking.application.ApplicationKt")
+    mainClass.set("com.hotel.booking.application.ApplicationKt")
 }
 
 detekt {
@@ -145,8 +145,8 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
 }
 
 val exclusion: Array<String> = arrayOf(
-    "com/alten/hotel/booking/commons/**",
-    "com/alten/hotel/booking/application/ApplicationKt.*",
+    "com/hotel/booking/commons/**",
+    "com/hotel/booking/application/ApplicationKt.*",
 )
 tasks.withType<JacocoReport> {
     dependsOn(tasks.test)
