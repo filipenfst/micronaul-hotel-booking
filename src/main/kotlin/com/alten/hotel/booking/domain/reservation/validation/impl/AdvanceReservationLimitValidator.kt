@@ -12,7 +12,6 @@ object AdvanceReservationLimitValidator : ReservationValidator {
     override suspend fun isValid(reservation: Reservation): Boolean = with(reservation) {
         logInfo("Checking if reservation date is beyond the $DAYS_LIMIT days limit")
         endDate <= LocalDate.now().plusDays(DAYS_LIMIT)
-        true
     }.also {
         logInfo("Returning $it")
     }
