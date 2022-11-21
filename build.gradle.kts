@@ -35,6 +35,10 @@ dependencies {
     kapt("io.micronaut:micronaut-graal")
     kapt("io.micronaut.serde:micronaut-serde-processor")
 
+    compileOnly("org.graalvm.nativeimage:svm")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("org.jetbrains.kotlin:kotlin-reflect")
+
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
@@ -45,11 +49,9 @@ dependencies {
     implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
 
-    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
-    implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
+//    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
+//    implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
     implementation("jakarta.annotation:jakarta.annotation-api")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compileOnly("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutinesVersion")
@@ -60,8 +62,6 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("io.micronaut:micronaut-management")
 
-    compileOnly("org.graalvm.nativeimage:svm")
-
     runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     runtimeOnly("org.postgresql:postgresql:42.5.0")
     runtimeOnly("io.r2dbc:r2dbc-pool")
@@ -71,12 +71,13 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("io.micronaut.test:micronaut-test-rest-assured")
     testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:$wiremockVersion")
-    testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 configurations.all {
