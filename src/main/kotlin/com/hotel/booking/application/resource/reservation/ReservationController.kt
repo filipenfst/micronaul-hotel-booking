@@ -2,7 +2,7 @@ package com.hotel.booking.application.resource.reservation
 
 import com.hotel.booking.application.resource.reservation.dto.AvailableDateResponse
 import com.hotel.booking.application.resource.reservation.dto.ReservationConfirmationResponse
-import com.hotel.booking.application.resource.reservation.dto.ReservationRequestDTO
+import com.hotel.booking.application.resource.reservation.dto.ReservationRequest
 import com.hotel.booking.application.resource.reservation.dto.toReservationConfirmation
 import com.hotel.booking.usecase.reservation.ListAvailabilityUseCase
 import com.hotel.booking.usecase.reservation.ReservationBookingUseCase
@@ -32,7 +32,7 @@ open class ReservationController(
 
     @Post(produces = [io.micronaut.http.MediaType.APPLICATION_JSON])
     suspend fun create(
-        @Body body: ReservationRequestDTO,
+        @Body body: ReservationRequest,
         @Header("X_CLIENT_ID") clientId: String
     ): ReservationConfirmationResponse = with(body) {
         reservationBookingUseCase.execute(clientId = clientId, startDate = start, endDate = end)
@@ -42,7 +42,7 @@ open class ReservationController(
     @Put("/{reservationId}", produces = [io.micronaut.http.MediaType.APPLICATION_JSON])
     @Transactional
     open suspend fun edit(
-        @Body body: ReservationRequestDTO,
+        @Body body: ReservationRequest,
         @Header("X_CLIENT_ID") clientId: String,
         @PathVariable reservationId: String,
     ): ReservationConfirmationResponse = with(body) {

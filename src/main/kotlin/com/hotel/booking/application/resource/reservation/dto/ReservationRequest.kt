@@ -6,7 +6,7 @@ import io.micronaut.serde.annotation.Serdeable
 import java.time.LocalDate
 
 @Serdeable
-data class ReservationRequestDTO(
+data class ReservationRequest(
     @field:JsonFormat(pattern = "yyyy-MM-dd")
     val start: LocalDate,
     @field:JsonFormat(pattern = "yyyy-MM-dd")
