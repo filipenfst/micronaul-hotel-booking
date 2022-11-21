@@ -1,4 +1,4 @@
-package com.hotel.booking.application.resource
+package com.hotel.booking.application.resource.error
 
 import io.micronaut.serde.annotation.Serdeable
 

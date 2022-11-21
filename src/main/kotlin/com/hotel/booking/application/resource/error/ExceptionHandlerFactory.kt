@@ -1,4 +1,4 @@
-package com.hotel.booking.application.resource
+package com.hotel.booking.application.resource.error
 
 import com.hotel.booking.commons.logger.logWarn
 import com.hotel.booking.domain.reservation.validation.exceptions.ReservationNotFoundException

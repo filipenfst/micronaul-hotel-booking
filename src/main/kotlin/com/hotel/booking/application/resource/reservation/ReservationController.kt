@@ -1,5 +1,9 @@
-package com.hotel.booking.application.resource
+package com.hotel.booking.application.resource.reservation
 
+import com.hotel.booking.application.resource.reservation.dto.AvailableDateResponse
+import com.hotel.booking.application.resource.reservation.dto.ReservationConfirmationResponse
+import com.hotel.booking.application.resource.reservation.dto.ReservationRequestDTO
+import com.hotel.booking.application.resource.reservation.dto.toReservationConfirmation
 import com.hotel.booking.usecase.reservation.ListAvailabilityUseCase
 import com.hotel.booking.usecase.reservation.ReservationBookingUseCase
 import com.hotel.booking.usecase.reservation.ReservationCancellationUseCase
@@ -30,7 +34,7 @@ open class ReservationController(
     suspend fun create(
         @Body body: ReservationRequestDTO,
         @Header("X_CLIENT_ID") clientId: String
-    ): ReservationConfirmationDTO = with(body) {
+    ): ReservationConfirmationResponse = with(body) {
         reservationBookingUseCase.execute(clientId = clientId, startDate = start, endDate = end)
             .toReservationConfirmation()
     }
@@ -41,7 +45,7 @@ open class ReservationController(
         @Body body: ReservationRequestDTO,
         @Header("X_CLIENT_ID") clientId: String,
         @PathVariable reservationId: String,
-    ): ReservationConfirmationDTO = with(body) {
+    ): ReservationConfirmationResponse = with(body) {
         reservationEditingUseCase.execute(
             reservationId = reservationId,
             clientId = clientId,

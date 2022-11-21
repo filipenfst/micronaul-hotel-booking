@@ -1,4 +1,4 @@
-package com.hotel.booking.application.resource
+package com.hotel.booking.application.resource.reservation.dto
 
 import com.hotel.booking.domain.reservation.entities.ConfirmedReservation
 import com.fasterxml.jackson.annotation.JsonFormat
@@ -13,7 +13,7 @@ data class ReservationRequestDTO(
     val end: LocalDate
 )
 
-fun ConfirmedReservation.toReservationConfirmation() = ReservationConfirmationDTO(
+fun ConfirmedReservation.toReservationConfirmation() = ReservationConfirmationResponse(
     start = startDate,
     end = endDate,
     confirmationId = confirmation.id,

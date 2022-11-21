@@ -1,4 +1,4 @@
-package com.hotel.booking.application.resource
+package com.hotel.booking.application.resource.reservation.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import io.micronaut.serde.annotation.Serdeable
