@@ -29,11 +29,7 @@ internal class UserHttpClientGatewayTest : IntegrationTests {
                 )
         )
 
-        kotlin.runCatching {
-            userWebClientGateway.findUser("123")//.assertThat().isEqualTo(User("123", "Name test"))
-        }.onFailure {
-            logError("test error", ex = it)
-        }
+        userWebClientGateway.findUser("123")//.assertThat().isEqualTo(User("123", "Name test"))
 
         WireMockInitializer.wireMock.verify(
             1,
@@ -41,9 +37,16 @@ internal class UserHttpClientGatewayTest : IntegrationTests {
         )
     }
 
-
     @Test
     fun testCircuitBreaker(): Unit = runBlocking {
+        WireMockInitializer.wireMock.stubFor(
+            get(urlEqualTo("/user/123"))
+                .willReturn(
+                    aResponse()
+                        .withStatus(404)
+                        .withJsonResponseFile("userResponse.json") { }
+                )
+        )
 
         repeat(3) {
             kotlin.runCatching {

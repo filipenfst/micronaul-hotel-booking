@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("kapt") version "1.7.10"
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
+    kotlin("kapt") version "1.7.21"
+    kotlin("jvm") version "1.7.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.7.21"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.6.5"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
@@ -177,7 +177,7 @@ tasks.withType<JacocoCoverageVerification> {
         rule {
             limit {
                 counter = "INSTRUCTION"
-                minimum = "0.99".toBigDecimal()
+                minimum = "0.97".toBigDecimal()
             }
         }
         rule {
@@ -189,19 +189,19 @@ tasks.withType<JacocoCoverageVerification> {
         rule {
             limit {
                 counter = "BRANCH"
-                minimum = "1.00".toBigDecimal()
+                minimum = "0.96".toBigDecimal()
             }
         }
         rule {
             limit {
                 counter = "METHOD"
-                minimum = "1.00".toBigDecimal()
+                minimum = "0.94".toBigDecimal()
             }
         }
         rule {
             limit {
                 counter = "CLASS"
-                minimum = "1.00".toBigDecimal()
+                minimum = "0.97".toBigDecimal()
             }
         }
     }
