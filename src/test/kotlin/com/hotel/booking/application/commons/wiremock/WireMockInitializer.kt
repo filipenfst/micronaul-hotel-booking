@@ -1,31 +1,32 @@
 package com.hotel.booking.application.commons.wiremock
 
+import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.hotel.booking.application.commons.conteiners.ContextInitializer
 
 object WireMockInitializer : ContextInitializer {
     private var startWireMock = false
 
-    val teamsApi = MockComponent()
+    val wireMock  = WireMockServer(WireMockConfiguration.wireMockConfig().dynamicPort().dynamicHttpsPort())
 
     fun resetAll() {
-        teamsApi.reset()
+        wireMock.resetAll()
     }
 
     override fun getProperties(): Map<String, String> {
         return mapOf(
-            "client.teams.api.base-url" to " http://localhost:%s".format(teamsApi.port()),
-            "client.teams.api.retry-period" to "100"
+            "client.user-api.base-url" to "http://localhost:%s".format(wireMock.port()),
         )
     }
 
     override fun start() {
         if (!startWireMock) {
-            teamsApi.start()
+            wireMock.start()
             startWireMock = true
         }
     }
 
     override fun stop() {
-        teamsApi.stop()
+        wireMock.stop()
     }
 }

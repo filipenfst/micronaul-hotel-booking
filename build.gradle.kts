@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.7.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.6.2"
+    id("io.micronaut.application") version "3.6.5"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     jacoco
 }
@@ -18,8 +18,8 @@ repositories {
     mavenCentral()
 }
 
-val testcontainersVersion = "1.17.4"
-val resilience4jVersion = "1.7.1"
+val testcontainersVersion = "1.17.6"
+val resilience4jVersion = "2.0.0"
 val coroutinesVersion = "1.6.4"
 val jacksonVersion = "2.13.4"
 val wiremockVersion = "2.35.0"
@@ -44,13 +44,19 @@ dependencies {
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
     implementation("io.micronaut.data:micronaut-data-r2dbc")
     implementation("io.micronaut.flyway:micronaut-flyway")
+
     implementation("io.micronaut.serde:micronaut-serde-jackson")
 
     implementation("io.micronaut.tracing:micronaut-tracing-zipkin")
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
 
-//    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
-//    implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-kotlin:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-retry:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-circuitbreaker:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-micronaut:$resilience4jVersion")
+//    implementation("io.github.resilience4j:resilience4j-framework-common:$resilience4jVersion")
+    implementation("io.github.resilience4j:resilience4j-consumer:$resilience4jVersion")
+
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutinesVersion")
@@ -79,13 +85,14 @@ dependencies {
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
-
-configurations.all {
-    resolutionStrategy.dependencySubstitution {
-        substitute(module("io.micronaut:micronaut-jackson-databind"))
-            .using(module("io.micronaut.serde:micronaut-serde-jackson:1.3.2"))
-    }
-}
+//configurations.all {
+//    if (name != "testResourcesService") {
+//        resolutionStrategy.dependencySubstitution {
+//            substitute(module("io.micronaut:micronaut-jackson-databind"))
+//                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.3.2"))
+//        }
+//    }
+//}
 
 micronaut {
     runtime("netty")

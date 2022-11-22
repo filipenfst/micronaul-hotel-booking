@@ -58,3 +58,24 @@ r2dbc:
 endpoints:
   prometheus:
     sensitive: false
+
+client:
+  user-api:
+      base-url: http://localhost:8080
+
+resilience4j:
+  circuitbreaker:
+    enabled: true
+    instances:
+      user-api:
+        baseConfig: default
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 2
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: TIME_BASED
+        minimumNumberOfCalls: 2
+        waitDurationInOpenState: 1s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10

@@ -4,6 +4,7 @@ import com.hotel.booking.application.commons.conteiners.PostgresqlInitializer
 import com.hotel.booking.application.commons.conteiners.merge
 import com.hotel.booking.application.commons.wiremock.WireMockInitializer
 import com.hotel.booking.application.gateway.r2dbc.reservation.ReservationRepository
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import kotlinx.coroutines.reactive.asFlow
@@ -29,10 +30,14 @@ internal interface IntegrationTests : TestPropertyProvider {
 
     @AfterEach
     fun reset(
-        reservationRepository: ReservationRepository
+        reservationRepository: ReservationRepository,
+        circuitBreakerRegistry: CircuitBreakerRegistry
     ): Unit = runBlocking {
         WireMockInitializer.resetAll()
         reservationRepository.deleteAll().asFlow().collect {}
+        circuitBreakerRegistry.allCircuitBreakers.forEach {
+            it.reset()
+        }
     }
 
     override fun getProperties(): Map<String, String> {

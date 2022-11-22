@@ -3,7 +3,8 @@ package com.hotel.booking.application.commons.wiremock
 import com.github.tomakehurst.wiremock.client.MappingBuilder
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
-import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
+import com.hotel.booking.application.commons.payload
+import wiremock.com.jayway.jsonpath.DocumentContext
 
 internal fun <E : Any, A : Any> E.runIfNotNull(arg: A?, function: (E.(A) -> E)) =
     if (arg == null) this else this.function(arg)
@@ -25,15 +26,9 @@ internal fun ResponseDefinitionBuilder.withJsonResponseBody(
 ): ResponseDefinitionBuilder = withHeader("Content-Type", "application/json")
     .withBody(jsonResponseBody())
 
-
-fun RequestPatternBuilder.withJsonRequestBody(
-    ignoreArrayOrder: Boolean = false,
-    ignoreExtraElements: Boolean = false,
-    requestBodyBuilder: (() -> String)
-): RequestPatternBuilder = withRequestBody(
-    WireMock.equalToJson(
-        requestBodyBuilder(),
-        ignoreArrayOrder,
-        ignoreExtraElements
-    )
-)
+internal fun ResponseDefinitionBuilder.withJsonResponseFile(
+    fileName: String,
+    builder: DocumentContext.() -> Unit
+): ResponseDefinitionBuilder = withJsonResponseBody {
+    fileName.payload(builder)
+}
