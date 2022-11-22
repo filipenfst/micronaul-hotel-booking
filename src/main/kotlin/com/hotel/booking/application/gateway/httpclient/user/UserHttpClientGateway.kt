@@ -17,13 +17,10 @@ import kotlinx.coroutines.reactive.awaitSingle
 @Singleton
 class UserHttpClientGateway(
     @Named("user-api") private val clientConfiguration: ClientConfiguration,
-//    circuitBreakerRegistry: CircuitBreakerRegistry,
 ) : UserPort {
     private val httpClient = clientConfiguration.httpClient()
-//    private val circuitBreaker = circuitBreakerRegistry.circuitBreaker(clientConfiguration.name)
-    private val circuitBreaker = clientConfiguration.circuitBreaker
 
-    override suspend fun findUser(id: String): User? = circuitBreaker.executeSuspendFunction {
+    override suspend fun findUser(id: String): User? = clientConfiguration.circuitBreaker.executeSuspendFunction {
         httpClient.awaitExchange<UserResponse?>(
             request = HttpRequest.GET("/user/$id")
         ) {
@@ -32,8 +29,8 @@ class UserHttpClientGateway(
             } else {
                 TODO()
             }
-        }?.toDomain()
-    }
+        }
+    }?.toDomain()
 }
 
 suspend inline fun <reified T> HttpClient.awaitExchange(

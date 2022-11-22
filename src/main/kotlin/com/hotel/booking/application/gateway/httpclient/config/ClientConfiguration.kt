@@ -14,7 +14,7 @@ data class ClientConfiguration(
     @param:Parameter val name: String,
     @Inject private val circuitBreakerRegistry: CircuitBreakerRegistry
 ) {
-    val circuitBreaker = circuitBreakerRegistry.circuitBreaker(name)
     lateinit var baseUrl: String
+    val circuitBreaker = circuitBreakerRegistry.circuitBreaker(name)
     fun httpClient() = HttpClient.create(URL(baseUrl))
 }
